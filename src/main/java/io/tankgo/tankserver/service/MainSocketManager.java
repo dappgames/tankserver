@@ -38,7 +38,6 @@ public class MainSocketManager implements DisposableBean {
         } catch (Exception e) {
 
         }
-        //config.setAuthorizationListener(authorizationListener);
         SocketConfig socketConfig = new SocketConfig();
         socketConfig.setReuseAddress(true);
         config.setSocketConfig(socketConfig);
