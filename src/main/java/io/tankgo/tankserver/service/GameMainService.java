@@ -35,6 +35,9 @@ public class GameMainService implements DisposableBean {
     @Autowired
     private GameRoom gameRoom;
 
+    @Autowired
+    private SimpleRoom simpleRoom;
+
     private static Logger logger = LoggerFactory.getLogger(GameMainService.class);
     private SocketIOServer server;
 
@@ -61,6 +64,9 @@ public class GameMainService implements DisposableBean {
         initSocketListener();
     }
 
+    public SocketIOServer getServer() {
+        return server;
+    }
 
     public void allowLogin(String socketId, Long userWalletId){
         if(StringUtils.isEmpty(socketId)){
@@ -117,14 +123,6 @@ public class GameMainService implements DisposableBean {
     }
 
     public void initSocketListener() {
-
-        server.addEventListener("chatevent", io.tankgo.tankserver.bo.ChatObject.class, new DataListener<io.tankgo.tankserver.bo.ChatObject>() {
-            @Override
-            public void onData(SocketIOClient client, ChatObject data, AckRequest ackRequest) {
-                // broadcast messages to all clients
-                server.getBroadcastOperations().sendEvent("chatevent", data);
-            }
-        });
 
         server.addEventListener("login", UserInfoDTO.class, new DataListener<UserInfoDTO>() {
             @Override
